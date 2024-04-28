@@ -19,7 +19,7 @@ function Navbar() {
         <h1 className='font-bold text-2xl w-[30%]'>Shopify</h1>
         <div className=' items-center gap-4  justify-center px-6 hidden md:flex'>
         {[{
-            menu : 'Home', route : '/home'
+            menu : 'Home', route : '/'
         },{menu : 'Contact',route : '/contact'},{menu :"About", route : "/about"},{menu : 'Sign Up', route : "/signup"}].map(function(elem,index){
             return (
                 <Link key={index} to={elem.route} className='font-semibold'>{elem.menu}</Link>
@@ -43,7 +43,7 @@ function Navbar() {
                         <h1 className='font-bold text-3xl w-[30%] mb-8 '>Shopify</h1>
                         <div className='flex flex-col gap-4'>
                         {[{
-            menu : 'Home', route : '/home'
+            menu : 'Home', route : '/'
         },{menu : 'Contact',route : '/contact'},{menu :"About", route : "/about"},{menu : 'Sign Up', route : "/signup"}].map(function(elem,index){
             return (
                 <Link key={index} to={elem.route} className='font-semibold text-xl'>{elem.menu}</Link>
