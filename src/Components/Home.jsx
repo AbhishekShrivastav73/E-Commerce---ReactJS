@@ -1,17 +1,40 @@
-import React from 'react'
+import axios, { Axios } from "axios";
+import React, { useEffect, useState } from "react";
+import ProductCards from "./ProductCards";
 
 function Home() {
+  const [products, setData] = useState([]);
+  const news = [1,2,3,4,5,6]
+
+  useEffect(() => {
+    const api = `https://fakestoreapi.com/products`;
+
+    axios
+      .get(api)
+      .then((response) => {
+        console.log(response.data);
+        setData(response.data);
+        
+      })
+      .catch((error) => console.error("error hogya hai"));
+  },[]);
+
   return (
-    <div className='w-full h-fit p-1 relative'>
-      <img className='w-full md:h-[70vh] object-cover object-top' src="https://images.unsplash.com/photo-1640437830863-8f7f38327319?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-      <div className="overlay md:gap-4 bg-black bg-opacity-5 p-8 absolute gap-2 top-0 w-full h-full text-white flex flex-col items-end justify-center ">
-        <p className='md:text-2xl'>Iphone 14 Series</p>
-        <h1 className='font-bold text-2xl md:text-5xl'>Upto 10% off Vouncher!</h1>
-      
-        <button className='bg-white md:text-xl px-3 py-1 font-bold rounded-sm text-black'>Shop Now</button>
+    <div className="w-full h-fit p-1 relative">
+      <img
+        className="w-full md:h-[70vh] object-cover object-center"
+        src="./public/hero.avif"
+        alt=""
+      />
+      <div className="m-4">
+        <h1 className="text-4xl md:text-6xl font-vold text-center mt-10">Great Indian Festival Is Here !!</h1>
       </div>
+      <div className="p-5 flex items-center flex-shrink-0 flex-wrap">
+      {products.map((elem,index)=><ProductCards key={index} productsData={elem}/>)}
+      </div>
+
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
