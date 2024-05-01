@@ -1,38 +1,49 @@
-import axios, { Axios } from "axios";
-import React, { useEffect, useState } from "react";
+
+import React, { useContext, useEffect, useState } from "react";
 import ProductCards from "./ProductCards";
+import ProductContext from "../Context/Product";
+import Sections from "./Sections";
 
 function Home() {
-  const [products, setData] = useState([]);
-  const news = [1,2,3,4,5,6]
+  const [sectionData,setData] = useState([
+    {sec : `Today's`, title : "Flash Sales"},
+    {sec : `Categories`, title : "Browse By Category"},
+    {sec : `This Month`, title : "Best Selling Products"},
+    {sec : `Our Products`, title : "Explore Our Products"},
+  ])
+  const {productsData,setProductData} = useContext(ProductContext);
 
-  useEffect(() => {
-    const api = `https://fakestoreapi.com/products`;
-
-    axios
-      .get(api)
-      .then((response) => {
-        console.log(response.data);
-        setData(response.data);
-        
-      })
-      .catch((error) => console.error("error hogya hai"));
-  },[]);
+  const topRatted = productsData.filter((elem)=> elem.rating.rate > 4);
 
   return (
-    <div className="w-full h-fit p-1 relative">
+    <div className="w-full h-fit p-4 relative ">
       <img
-        className="w-full md:h-[70vh] object-cover object-center"
+        className="w-full mb-12 md:h-[70vh] object-cover object-center"
         src="./public/hero.avif"
         alt=""
       />
-      <div className="m-4">
-        <h1 className="text-4xl md:text-6xl font-vold text-center mt-10">Great Indian Festival Is Here !!</h1>
-      </div>
-      <div className="p-5 flex items-center flex-shrink-0 flex-wrap">
-      {products.map((elem,index)=><ProductCards key={index} productsData={elem}/>)}
-      </div>
+      <section className="todays w-full mb-12">
 
+     {sectionData.map((elem)=>{
+       if(elem.sec === `Today's`) return <Sections data={elem}/>
+      })}
+
+
+      <div className=" flex items-center px-8 overflow-x-auto m-4 gap-5">
+      {topRatted.map((elem,index)=><ProductCards key={elem.id} value={elem}/>)}
+      </div>
+  
+      </section>
+
+      <section>
+
+      {sectionData.map((elem)=>{
+        if(elem.sec === `Categories`) return <Sections data={elem}/>
+      })}
+      </section>
+
+
+      
     </div>
   );
 }
